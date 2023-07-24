@@ -1,21 +1,25 @@
-sap.ui.define([], function () {
+sap.ui.define([
+	"sap/ui/core/library",
+], function (coreLibrary) {
 	"use strict";
 
-	return {
+	const ValueState = coreLibrary.ValueState;
 
-		/**
-		 * Rounds the number unit value to 2 digits
-		 * @public
-		 * @param {string} sValue the number string to be rounded
-		 * @returns {string} sValue with 2 digits rounded
-		 */
-		numberUnit : function (sValue) {
-			if (!sValue) {
+	return {
+		numberUnit: function(value) {
+			if (!value) {
 				return "";
 			}
-			return parseFloat(sValue).toFixed(2);
+			return parseFloat(value).toFixed(2);
+		},
+		quantityState: function(value) {
+			if(value === 0) {
+				return ValueState.Error;
+			} else if(value <= 10) {
+				return ValueState.Warning;
+			} else {
+				return ValueState.Success;
+			}
 		}
-
 	};
-
 });
